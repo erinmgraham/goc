@@ -40,11 +40,10 @@ pvalues = rep(NA, length(my.taus)+2)
 pseudoR2s = rep(NA, length(my.taus)+2)
 
 # function to calculate pseudo R2
-# (1 - exp(-2/N *(m.ll - n.ll)))/(1 - exp(2/N * n.ll))
+# R2 = 1 - exp(-2/N *(m.ll - n.ll))
 calculatePseudoR2 = function(model, null.model, n) {
 
-	pR2 = (1 - exp(-2/n *(logLik(model)[1] - logLik(null.model)[1])))/
-		(1 - exp(2/n * logLik(null.model)[1]))
+	pR2 = (1 - exp(-2/n *(logLik(model)[1] - logLik(null.model)[1])))
 
 	return (pR2)
 }
@@ -133,8 +132,8 @@ qr.gof = rep(NA, length(my.taus))
 	write.csv(outputs, file=paste(fish, "_abundance.csv", sep=""), row.names = my.names)
 	
 	# save plot
-	# create .pdf to save figure
-	pdf(file=paste("/home/jc140298/jorge_abundance/", fish, "_abundance.pdf", sep=""))
+	# create .png to save figure
+	png(file=paste("/home/jc140298/jorge_abundance/", fish, "_abundance.png", sep=""))
 	plot(tr.df.es.f.abundance$es, tr.df.es.f.abundance$prop.mean.abundance, 
 		main=fish, xlab="Predicted Environmental Suitability", ylab="Proportionate Abundance",
 		xlim=c(0,1))
@@ -150,7 +149,7 @@ qr.gof = rep(NA, length(my.taus))
 	lines(newx, predict(nl.qr.model, newdata=list(es=newx)), col=4)
 	}
 	
-	# close the .pdf 
+	# close the .png 
 	dev.off()
 		
 }
